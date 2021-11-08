@@ -1,0 +1,68 @@
+<%- include("includes/header"); -%>
+
+        <div class="otsikko">
+        <h2><%=otsikko%></h2>
+        <img <%=imgsrc%>></img>
+        </div>
+
+        <form method="GET" action="/">
+                <button type="submit">Palaa etusivulle</button>
+        </form>
+        
+        <%- include("includes/filter"); -%>
+
+        <div class="navi">
+        <ul>
+        <% maarat.forEach((maara, x) => { %>
+            <li><a href="/rajaus/<%=maara.Maakunta%>"><%=maara.Maakunta%> (<%=maara.Maara%>)</a></li>
+        <% }); %>
+        </ul> 
+        </div>
+        <div class="listi">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Nimi</th>
+                    <th>Maakunta</th>
+                    <th>Seutukunta</th>
+                    <th>Kuntamuoto</th>
+                </tr>
+            </thead>
+            <tbody>    
+            <% tiedot.forEach((kayttaja) => { %>
+                <% if(filter){ %>
+                <% if(kayttaja.Maakunta == otsikko && kayttaja.Kuntamuoto == "Kaupunki") { %>
+                <tr>                    
+                    <td>
+                        <% if(kayttaja["Nimi (fi)"].replace(" ","") == kayttaja["Nimi (se)"].replace(" ","")) {%>
+                            <%=kayttaja["Nimi (fi)"]%>
+                        <% } else { %>
+                            <%=kayttaja["Nimi (fi)"]%> (<%=kayttaja["Nimi (se)"]%>)
+                        <%}; %>
+                        </a>
+                    </td>
+                    <td><%=kayttaja.Maakunta%></td>
+                    <td><%=kayttaja.Seutukunta%></td>
+                    <td><%=kayttaja.Kuntamuoto%></td>
+                </tr>
+             <% }} else { %>
+                <% if(kayttaja.Maakunta == otsikko) { %>
+                        <tr>                    
+                            <td>
+                                <% if(kayttaja["Nimi (fi)"].replace(" ","") == kayttaja["Nimi (se)"].replace(" ","")) {%>
+                                    <%=kayttaja["Nimi (fi)"]%>
+                                <% } else { %>
+                                    <%=kayttaja["Nimi (fi)"]%> (<%=kayttaja["Nimi (se)"]%>)
+                                <%}; %>
+                                </a>
+                            </td>
+                            <td><%=kayttaja.Maakunta%></td>
+                            <td><%=kayttaja.Seutukunta%></td>
+                            <td><%=kayttaja.Kuntamuoto%></td>
+                        </tr>
+                    <% } %>
+            <% }}); %>
+            </tbody>
+        </table>    
+</div>
+<%- include("includes/footer") -%>

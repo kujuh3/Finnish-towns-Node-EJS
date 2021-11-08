@@ -1,0 +1,43 @@
+<%- include("includes/header"); -%>
+
+        <h2><%=otsikko%></h2>
+
+        <%- include("includes/filter"); -%>
+        <div class="navi">
+        <ul>
+        <% maarat.forEach((maara, x) => { %>
+            <li><a href="/rajaus/<%=maara.Maakunta%>"><%=maara.Maakunta%> (<%=maara.Maara%>)</a></li>
+        <% }); %>
+        </ul>
+        </div>
+        <div class="listi">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Nimi</th>
+                    <th>Maakunta</th>
+                    <th>Seutukunta</th>
+                    <th>Kuntamuoto</th>
+                </tr>
+            </thead>
+            <tbody>    
+            <% tiedot.forEach((kayttaja) => { %>
+                <tr>
+                <% if(kayttaja.Kuntamuoto == "Kaupunki") { %>                    
+                    <td>
+                        <% if(kayttaja["Nimi (fi)"].replace(" ","") == kayttaja["Nimi (se)"].replace(" ","")) {%>
+                            <%=kayttaja["Nimi (fi)"]%>
+                        <% } else { %>
+                            <%=kayttaja["Nimi (fi)"]%> (<%=kayttaja["Nimi (se)"]%>)
+                        <%}; %>
+                        </a>
+                    </td>
+                    <td><%=kayttaja.Maakunta%></td>
+                    <td><%=kayttaja.Seutukunta%></td>
+                    <td><%=kayttaja.Kuntamuoto%></td>
+                </tr>
+            <% }}); %>
+            </tbody>
+        </table>    
+        </div>
+<%- include("includes/footer") -%>
